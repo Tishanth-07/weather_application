@@ -12,7 +12,6 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final indexController = TextEditingController(text: "224199T");
-  double? lat, lon;
   double? latitude;
   double? longitude;
   String? requestUrl;
@@ -33,13 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
 
   Future<void> fetchWeather() async {
-    if (lat == null) computeCoords();
+    if (latitude == null || longitude == null) computeCoords();
 
     setState(() => loading = true);
 
     try {
       final service = WeatherService();
-      final result = await service.fetchWeather(lat!, lon!);
+      final result = await service.fetchWeather(latitude!, longitude!);
       setState(() {
         weather = result;
         isCached = false;
@@ -73,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
 
             SizedBox(height: 10),
-            Text("Latitude: $lat"),
-            Text("Longitude: $lon"),
+            Text("Latitude: $latitude"),
+            Text("Longitude: $longitude"),
 
             SizedBox(height: 20),
             ElevatedButton(
