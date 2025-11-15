@@ -20,13 +20,7 @@ class WeatherService {
         throw Exception("Failed to load");
       }
     } catch (e) {
-      final cached = prefs.getString("cached_weather");
-
-      if (cached != null) {
-        return WeatherModel.fromJson(jsonDecode(cached));
-      } else {
-        throw Exception("No internet & no cached data!");
-      }
+      throw Exception("Failed to load weather data: $e");
     }
   }
 }

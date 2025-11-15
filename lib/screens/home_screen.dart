@@ -18,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   WeatherModel? weather;
   bool loading = false;
   bool isCached = false;
+  String? errorMessage;
 
   void computeCoords() {
     final idx = indexController.text;
@@ -33,7 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> fetchWeather() async {
     if (latitude == null || longitude == null) computeCoords();
 
-    setState(() => loading = true);
+    setState(() {
+      loading = true;
+      errorMessage = null;
+    });
 
     try {
       final service = WeatherService();
@@ -41,12 +45,18 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         weather = result;
         isCached = false;
+        errorMessage = null;
       });
     } catch (e) {
-      setState(() => isCached = true);
+      // Network error (e.g., airplane mode) or no cached data
+      setState(() {
+        weather = null;
+        isCached = false;
+        errorMessage = e.toString();
+      });
+    } finally {
+      setState(() => loading = false);
     }
-
-    setState(() => loading = false);
   }
 
   @override
@@ -192,6 +202,26 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
+
+              if (errorMessage != null && errorMessage!.isNotEmpty) ...[
+                SizedBox(height: 16),
+                Container(
+                  padding: EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.red[50],
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red[200]!),
+                  ),
+                  child: Text(
+                    errorMessage!,
+                    style: TextStyle(
+                      color: Colors.red[800],
+                      fontSize: 12,
+                      fontFamily: 'monospace',
+                    ),
+                  ),
+                ),
+              ],
 
               if (loading) ...[
                 SizedBox(height: 40),
