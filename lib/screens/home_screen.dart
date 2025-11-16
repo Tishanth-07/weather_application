@@ -11,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final indexController = TextEditingController(text: "224199T");
+  final indexController = TextEditingController(text: "224068R");
   double? latitude;
   double? longitude;
   String? requestUrl;
@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
         errorMessage = null;
       });
     } catch (e) {
-      // Network error (e.g., airplane mode) or no cached data
       setState(() {
         weather = null;
         isCached = false;
@@ -68,18 +67,27 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100],
+      backgroundColor: Color(0xFFF5F7FA),
       appBar: AppBar(
         title: Text(
           "Weather Dashboard",
           style: TextStyle(
-            fontWeight: FontWeight.w600,
-            fontSize: 22,
+            fontWeight: FontWeight.w700,
+            fontSize: 24,
+            letterSpacing: 0.5,
           ),
         ),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Colors.blue[700],
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+        ),
         foregroundColor: Colors.white,
       ),
       body: SingleChildScrollView(
@@ -89,58 +97,103 @@ class _HomeScreenState extends State<HomeScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // Input Card
-              Card(
-                elevation: 4,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+              Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.white, Color(0xFFFAFBFF)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF667eea).withOpacity(0.15),
+                      blurRadius: 20,
+                      offset: Offset(0, 10),
+                    ),
+                  ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(24),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        "Student Information",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.blue[800],
-                        ),
+                      Row(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+                              ),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Icon(Icons.school, color: Colors.white, size: 24),
+                          ),
+                          SizedBox(width: 12),
+                          Text(
+                            "Student Information",
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xFF2D3748),
+                            ),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 20),
                       TextField(
                         controller: indexController,
                         decoration: InputDecoration(
                           labelText: "Student Index",
-                          prefixIcon: Icon(Icons.person, color: Colors.blue[700]),
+                          labelStyle: TextStyle(color: Color(0xFF667eea)),
+                          prefixIcon: Icon(Icons.person, color: Color(0xFF667eea)),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(14),
                           ),
                           enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.grey[300]!),
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFFE2E8F0), width: 2),
                           ),
                           focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: BorderSide(color: Colors.blue[700]!, width: 2),
+                            borderRadius: BorderRadius.circular(14),
+                            borderSide: BorderSide(color: Color(0xFF667eea), width: 2.5),
                           ),
                           filled: true,
-                          fillColor: Colors.grey[50],
+                          fillColor: Color(0xFFF7FAFC),
                         ),
                         onChanged: (_) => computeCoords(),
                       ),
                       SizedBox(height: 20),
                       Container(
-                        padding: EdgeInsets.all(16),
+                        padding: EdgeInsets.all(18),
                         decoration: BoxDecoration(
-                          color: Colors.blue[50],
-                          borderRadius: BorderRadius.circular(12),
-                          border: Border.all(color: Colors.blue[100]!),
+                          gradient: LinearGradient(
+                            colors: [Color(0xFFEBF4FF), Color(0xFFF0E7FF)],
+                            begin: Alignment.topLeft,
+                            end: Alignment.bottomRight,
+                          ),
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Color(0xFF667eea).withOpacity(0.3), width: 1.5),
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.location_on, color: Colors.blue[700], size: 28),
-                            SizedBox(width: 12),
+                            Container(
+                              padding: EdgeInsets.all(10),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Color(0xFF667eea).withOpacity(0.2),
+                                    blurRadius: 8,
+                                    offset: Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Icon(Icons.location_on, color: Color(0xFF667eea), size: 28),
+                            ),
+                            SizedBox(width: 16),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,17 +202,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                     "Latitude: ${latitude?.toStringAsFixed(4) ?? 'N/A'}",
                                     style: TextStyle(
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF2D3748),
                                     ),
                                   ),
-                                  SizedBox(height: 4),
+                                  SizedBox(height: 6),
                                   Text(
                                     "Longitude: ${longitude?.toStringAsFixed(4) ?? 'N/A'}",
                                     style: TextStyle(
                                       fontSize: 15,
-                                      fontWeight: FontWeight.w500,
-                                      color: Colors.grey[800],
+                                      fontWeight: FontWeight.w600,
+                                      color: Color(0xFF2D3748),
                                     ),
                                   ),
                                 ],
@@ -173,71 +226,114 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
 
-              SizedBox(height: 20),
+              SizedBox(height: 24),
 
               // Fetch Button
-              ElevatedButton(
-                onPressed: fetchWeather,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue[700],
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF667eea), Color(0xFF764ba2)],
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
                   ),
-                  elevation: 4,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.cloud_download, size: 24),
-                    SizedBox(width: 8),
-                    Text(
-                      "Fetch Weather",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                      ),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(0xFF667eea).withOpacity(0.4),
+                      blurRadius: 20,
+                      offset: Offset(0, 10),
                     ),
                   ],
+                ),
+                child: ElevatedButton(
+                  onPressed: fetchWeather,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    foregroundColor: Colors.white,
+                    shadowColor: Colors.transparent,
+                    padding: EdgeInsets.symmetric(vertical: 18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.cloud_download, size: 26),
+                      SizedBox(width: 10),
+                      Text(
+                        "Fetch Weather",
+                        style: TextStyle(
+                          fontSize: 17,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: 0.5,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
 
               if (errorMessage != null && errorMessage!.isNotEmpty) ...[
-                SizedBox(height: 16),
+                SizedBox(height: 20),
                 Container(
-                  padding: EdgeInsets.all(12),
+                  padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.red[50],
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.red[200]!),
-                  ),
-                  child: Text(
-                    errorMessage!,
-                    style: TextStyle(
-                      color: Colors.red[800],
-                      fontSize: 12,
-                      fontFamily: 'monospace',
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFFFF5F5), Color(0xFFFED7D7)],
                     ),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: Color(0xFFFC8181), width: 1.5),
+                  ),
+                  child: Row(
+                    children: [
+                      Icon(Icons.error_outline, color: Color(0xFFC53030), size: 24),
+                      SizedBox(width: 12),
+                      Expanded(
+                        child: Text(
+                          errorMessage!,
+                          style: TextStyle(
+                            color: Color(0xFFC53030),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
 
               if (loading) ...[
-                SizedBox(height: 40),
+                SizedBox(height: 50),
                 Center(
                   child: Column(
                     children: [
-                      CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.blue[700]!),
-                        strokeWidth: 3,
+                      Container(
+                        padding: EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                              color: Color(0xFF667eea).withOpacity(0.3),
+                              blurRadius: 20,
+                              offset: Offset(0, 10),
+                            ),
+                          ],
+                        ),
+                        child: CircularProgressIndicator(
+                          valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF667eea)),
+                          strokeWidth: 4,
+                        ),
                       ),
-                      SizedBox(height: 16),
+                      SizedBox(height: 20),
                       Text(
                         "Loading weather data...",
                         style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
+                          color: Color(0xFF667eea),
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -246,46 +342,74 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
 
               if (weather != null && !loading) ...[
-                SizedBox(height: 20),
-                Card(
-                  elevation: 4,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                SizedBox(height: 24),
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.white, Color(0xFFFAFBFF)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Color(0xFF667eea).withOpacity(0.15),
+                        blurRadius: 20,
+                        offset: Offset(0, 10),
+                      ),
+                    ],
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(20),
+                    padding: const EdgeInsets.all(24),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "Weather Information",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.blue[800],
-                              ),
+                            Row(
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [Color(0xFF48BB78), Color(0xFF38A169)],
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Icon(Icons.wb_cloudy, color: Colors.white, size: 24),
+                                ),
+                                SizedBox(width: 12),
+                                Text(
+                                  "Weather Information",
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFF2D3748),
+                                  ),
+                                ),
+                              ],
                             ),
                             if (isCached)
                               Container(
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                padding: EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                                 decoration: BoxDecoration(
-                                  color: Colors.orange[100],
+                                  gradient: LinearGradient(
+                                    colors: [Color(0xFFFFF5E6), Color(0xFFFFE6CC)],
+                                  ),
                                   borderRadius: BorderRadius.circular(20),
-                                  border: Border.all(color: Colors.orange[300]!),
+                                  border: Border.all(color: Color(0xFFED8936), width: 1.5),
                                 ),
                                 child: Row(
                                   children: [
-                                    Icon(Icons.cached, color: Colors.orange[800], size: 16),
-                                    SizedBox(width: 4),
+                                    Icon(Icons.cached, color: Color(0xFFDD6B20), size: 18),
+                                    SizedBox(width: 6),
                                     Text(
                                       "Cached",
                                       style: TextStyle(
-                                        color: Colors.orange[800],
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w600,
+                                        color: Color(0xFFDD6B20),
+                                        fontSize: 13,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ],
@@ -293,43 +417,52 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                           ],
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 24),
                         _buildWeatherItem(
                           icon: Icons.thermostat,
                           label: "Temperature",
                           value: "${weather!.temperature}°C",
-                          color: Colors.red,
+                          gradientColors: [Color(0xFFFF6B6B), Color(0xFFEE5A6F)],
+                          iconBg: Color(0xFFFFF5F5),
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 14),
                         _buildWeatherItem(
                           icon: Icons.air,
                           label: "Wind Speed",
                           value: "${weather!.windSpeed} km/h",
-                          color: Colors.teal,
+                          gradientColors: [Color(0xFF4ECDC4), Color(0xFF44A08D)],
+                          iconBg: Color(0xFFE6FFFA),
                         ),
-                        SizedBox(height: 12),
+                        SizedBox(height: 14),
                         _buildWeatherItem(
                           icon: Icons.wb_sunny,
                           label: "Weather Code",
                           value: "${weather!.weatherCode}",
-                          color: Colors.amber,
+                          gradientColors: [Color(0xFFFFC837), Color(0xFFFF8008)],
+                          iconBg: Color(0xFFFFFAF0),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 24),
                         Container(
-                          padding: EdgeInsets.all(12),
+                          padding: EdgeInsets.all(16),
                           decoration: BoxDecoration(
-                            color: Colors.grey[100],
-                            borderRadius: BorderRadius.circular(8),
+                            gradient: LinearGradient(
+                              colors: [Color(0xFFF7FAFC), Color(0xFFEDF2F7)],
+                            ),
+                            borderRadius: BorderRadius.circular(14),
+                            border: Border.all(color: Color(0xFFCBD5E0), width: 1),
                           ),
                           child: Row(
                             children: [
-                              Icon(Icons.access_time, size: 16, color: Colors.grey[600]),
-                              SizedBox(width: 8),
-                              Text(
-                                "Last Updated: ${DateTime.now().toString().split('.')[0]}",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.grey[700],
+                              Icon(Icons.access_time, size: 20, color: Color(0xFF667eea)),
+                              SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  "Last Updated: ${DateTime.now().toString().split('.')[0]}",
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Color(0xFF4A5568),
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                 ),
                               ),
                             ],
@@ -345,16 +478,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
               if (requestUrl != null && requestUrl!.isNotEmpty)
                 Container(
-                  padding: EdgeInsets.all(12),
+                  padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    borderRadius: BorderRadius.circular(8),
+                    color: Color(0xFFF7FAFC),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(color: Color(0xFFE2E8F0)),
                   ),
                   child: Text(
                     requestUrl!,
                     style: TextStyle(
-                      fontSize: 10,
-                      color: Colors.grey[600],
+                      fontSize: 11,
+                      color: Color(0xFF718096),
                       fontFamily: 'monospace',
                     ),
                   ),
@@ -370,26 +504,38 @@ class _HomeScreenState extends State<HomeScreen> {
     required IconData icon,
     required String label,
     required String value,
-    required MaterialColor color,
+    required List<Color> gradientColors,
+    required Color iconBg,
   }) {
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: color[50],
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color[100]!),
+        gradient: LinearGradient(
+          colors: [gradientColors[0].withOpacity(0.1), gradientColors[1].withOpacity(0.05)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: gradientColors[0].withOpacity(0.3), width: 1.5),
       ),
       child: Row(
         children: [
           Container(
-            padding: EdgeInsets.all(8),
+            padding: EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: color[100],
-              borderRadius: BorderRadius.circular(8),
+              color: iconBg,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: gradientColors[0].withOpacity(0.3),
+                  blurRadius: 10,
+                  offset: Offset(0, 4),
+                ),
+              ],
             ),
-            child: Icon(icon, color: color[700], size: 24),
+            child: Icon(icon, color: gradientColors[0], size: 28),
           ),
-          SizedBox(width: 16),
+          SizedBox(width: 18),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -398,17 +544,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   label,
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.grey[600],
-                    fontWeight: FontWeight.w500,
+                    color: Color(0xFF718096),
+                    fontWeight: FontWeight.w600,
+                    letterSpacing: 0.3,
                   ),
                 ),
-                SizedBox(height: 4),
+                SizedBox(height: 6),
                 Text(
                   value,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
-                    color: color[900],
+                    color: Color(0xFF2D3748),
+                    letterSpacing: 0.5,
                   ),
                 ),
               ],
